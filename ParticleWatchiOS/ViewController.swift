@@ -21,7 +21,7 @@ class ViewController: UIViewController, WCSessionDelegate{
        var hours:String!
        var minutes:String!
     
-    @IBOutlet weak var lblOpView: UILabel!
+   
     
     
         func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
@@ -50,22 +50,20 @@ class ViewController: UIViewController, WCSessionDelegate{
                         let date = NSDate(timeIntervalSince1970: TimeInterval(self.dateandTime!))
                         let hourFormat = DateFormatter()
                         let minuteFormat = DateFormatter()
-                        // Set the current timezone to .current
+                        
+                        // Setting current time Zone!
                         hourFormat.timeZone = .current
                         minuteFormat.timeZone = .current
-                    
-        //                format.dateFormat = "h:mm a '' dd-MM-yyyy"
                         hourFormat.dateFormat = "h"
                         minuteFormat.dateFormat = "mm"
                         
-                        // Set the current date, altered by timezone.
+                        // Setting current date 
                         let hourString = hourFormat.string(from: date as Date)
                         self.hours = hourFormat.string(from: date as Date)
                         self.minutes = minuteFormat.string(from: date as Date)
                         print("HH: \(self.hours!)")
                         print("MM:\(self.minutes!)")
                         
-                        self.lblOpView.text = "\(String(describing: self.dateandTime))"
                         
                         self.sendHourToParticle()
                         self.sendMinuteToParticle()
@@ -152,11 +150,9 @@ class ViewController: UIViewController, WCSessionDelegate{
                 print("sent hour to particle")
             }
             else{
-                print("Error sending hour")
+                print("Error: Hours")
             }
         }
-        //var bytesToReceive : Int64 = task.countOfBytesExpectedToReceive
-        //print("\(bytesToReceive)")
         
     }
     
@@ -203,7 +199,7 @@ class ViewController: UIViewController, WCSessionDelegate{
         let funcArgs = [self.precipitation!] as [Any]
         let task = self.myPhoton!.callFunction("setPrecip", withArguments: funcArgs) { (resultCode : NSNumber?, error : Error?) -> Void in
             if (error == nil) {
-                print("sent precip to particle")
+                print("sending precipitation to particle")
             }
             else{
                 print("Error sending precip")
