@@ -18,6 +18,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         
     }
     
+    @IBOutlet weak var lblTempratureTomorrow: WKInterfaceLabel!
     @IBOutlet weak var lblCityName: WKInterfaceLabel!
     
     @IBOutlet weak var lbltime: WKInterfaceLabel!
@@ -110,17 +111,59 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                     print("Country: \(country!)")
                     // loading weather On watch
                     self.getWeather()
+                    self.getForecast()
+                    self.sendingWeatherInfoToiPhone()
+                    self.callback()
                 }
-        
+         
         
         
         
     }
     
+    func callback() {
+    //        self.getCurrentWeather()
+    //        self.getForecast()
+            self.sendingWeatherInfoToiPhone()
+             DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                self.callback()
+            }
+        }
+    
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
     }
+    
+    public func getForecast(){
+          //api.openweathermap.org/data/2.5/forecast?lat=35&lon=139
+          
+          self.lblTempratureTomorrow.setText("...")
+          //URL to get weather forecast
+          let URL = "https://api.openweathermap.org/data/2.5/forecast?lat=\(self.latitude!)&lon=\(self.longitude!)&appid=f8224a96eb0f4821f53f1a9b04106649"
+          
+          Alamofire.request(URL).responseJSON{
+              response in
+              guard let apiData = response.result.value else{
+                  print("Error getting response from url")
+                  return
+              }
+              //print(apiData)
+              
+              let jsonResponse = JSON(apiData)
+              
+              let tomorrowDescription = jsonResponse["list"].array![0]["weather"].array![0]["description"].string
+              let tomorrowTemp = jsonResponse["list"].array![0]["main"]["temp"].float
+              let tomorrowTempCelcius = tomorrowTemp! - 273.15
+              
+              self.lblTempratureTomorrow.setText("Tomorrow: \(tomorrowTempCelcius) °C")
+              self.tempratureTomorrow = tomorrowTempCelcius
+              
+              
+              print("Tomorrow Weather description : \(tomorrowDescription!)")
+              print("Tomorrow Temperature : \(tomorrowTempCelcius) °C")
+          }
+      }
     
     public func getWeather(){
         

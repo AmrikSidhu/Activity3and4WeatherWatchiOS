@@ -26,8 +26,11 @@
                         <label alignment="right" text="temp" id="4jF-Gi-yD5">
                             <fontDescription key="font" type="system" pointSize="11"/>
                         </label>
-                        <label alignment="right" text="percep" id="UMh-cB-CdF">
+                        <label alignment="right" text="tempTom" id="KaO-YV-DTH">
                             <fontDescription key="font" type="system" pointSize="12"/>
+                        </label>
+                        <label alignment="right" text="percep" id="UMh-cB-CdF">
+                            <fontDescription key="font" type="system" pointSize="13"/>
                         </label>
                         <button width="1" alignment="left" verticalAlignment="bottom" title="Send to Particle" id="IYH-OK-Nmo">
                             <fontDescription key="font" type="italicSystem" pointSize="12"/>
@@ -39,6 +42,7 @@
                     <color key="backgroundColor" red="0.078190376120000002" green="0.34512092729999999" blue="0.62449400909999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <outlet property="lblCityName" destination="d9U-M8-dmu" id="gRN-qx-Jy4"/>
+                        <outlet property="lblTempratureTomorrow" destination="KaO-YV-DTH" id="lyk-W8-oHi"/>
                         <outlet property="lblperception" destination="UMh-cB-CdF" id="QER-JQ-Jp6"/>
                         <outlet property="lbltemprature" destination="4jF-Gi-yD5" id="22i-MK-7AS"/>
                         <outlet property="lbltime" destination="fUk-Px-2wj" id="8LR-1k-wv9"/>

@@ -12,6 +12,15 @@ import WatchConnectivity
 
 class ViewController: UIViewController, WCSessionDelegate{
     
+    
+       
+       var dateandTime:Float!
+       var temprature:Float!
+       var tempTomorrow:Float!
+       var precipitation:Float!
+       var hours:String!
+       var minutes:String!
+    
     @IBOutlet weak var lblOpView: UILabel!
     
     
@@ -56,33 +65,42 @@ class ViewController: UIViewController, WCSessionDelegate{
                         print("HH: \(self.hours!)")
                         print("MM:\(self.minutes!)")
                         
-                        self.lblOpView.text = "MSG: \(self.dateandTime)"
+                        self.lblOpView.text = "\(String(describing: self.dateandTime))"
                         
-//                        self.sendHourToParticle()
-//                        self.sendMinuteToParticle()
-//                        self.sendTempToParticle()
-//                        self.sendTempTomToParticle()
-//                        self.sendPrecipToParticle()
+                        self.sendHourToParticle()
+                        self.sendMinuteToParticle()
+                        self.sendTempToParticle()
+                        self.sendTempTomToParticle()
+                        self.sendPrecipToParticle()
                     }
                 }
     }
-    
-    
-    var dateandTime:Float!
-    var temprature:Float!
-    var tempTomorrow:Float!
-    var precipitation:Float!
-    var hours:String!
-    var minutes:String!
+   
 
     // MARK: User variables
     let USERNAME = "eramriksidhu@gmail.com"
-    let PASSWORD = "gill@000"// MARK: Device
+    let PASSWORD = "gill@000"
+    
+    // MARK: Device
     let DEVICE_ID = "2b0040000f47363333343437"
     var myPhoton : ParticleDevice?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        DispatchQueue.main.async {
+            // 1. Check if phone supports WCSessions
+            print("Phone view loaded")
+            if WCSession.isSupported() {
+                print("Phone supports WCSession")
+                WCSession.default.delegate = self
+                WCSession.default.activate()
+                print("Session Activated")
+            }
+            else {
+                print("Phone does not support WCSession")
+            }
+        }
         
         // 1. Initialize the SDK
         ParticleCloud.init()
@@ -99,6 +117,8 @@ class ViewController: UIViewController, WCSessionDelegate{
                 print("Login success!")
             }
         } // end login
+        
+        self.getDeviceFromCloud()
     }
 
     override func didReceiveMemoryWarning() {
@@ -123,6 +143,73 @@ class ViewController: UIViewController, WCSessionDelegate{
             }
             
         } // end getDevice()
+    }
+    
+    func sendHourToParticle(){
+        let funcArgs = [self.hours!] as [Any]
+        let task = self.myPhoton!.callFunction("setHour", withArguments: funcArgs) { (resultCode : NSNumber?, error : Error?) -> Void in
+            if (error == nil) {
+                print("sent hour to particle")
+            }
+            else{
+                print("Error sending hour")
+            }
+        }
+        //var bytesToReceive : Int64 = task.countOfBytesExpectedToReceive
+        //print("\(bytesToReceive)")
+        
+    }
+    
+    func sendMinuteToParticle(){
+        let funcArgs = [self.minutes!] as [Any]
+        let task = self.myPhoton!.callFunction("setMinute", withArguments: funcArgs) { (resultCode : NSNumber?, error : Error?) -> Void in
+            if (error == nil) {
+                print("sent minute to particle")
+            }
+            else{
+                print("Error sending minute")
+            }
+        }
+        
+    }
+    
+    func sendTempToParticle(){
+        let funcArgs = [self.temprature!] as [Any]
+        let task = self.myPhoton!.callFunction("setTemp", withArguments: funcArgs) { (resultCode : NSNumber?, error : Error?) -> Void in
+            if (error == nil) {
+                print("sent temp to particle")
+            }
+            else{
+                print("Error sending temp")
+            }
+        }
+        
+    }
+
+    func sendTempTomToParticle(){
+        let funcArgs = [self.tempTomorrow!] as [Any]
+        let task = self.myPhoton!.callFunction("setTempTom", withArguments: funcArgs) { (resultCode : NSNumber?, error : Error?) -> Void in
+            if (error == nil) {
+                print("sent tempTom to particle")
+            }
+            else{
+                print("Error sending tempTom")
+            }
+        }
+        
+    }
+    
+    func sendPrecipToParticle(){
+        let funcArgs = [self.precipitation!] as [Any]
+        let task = self.myPhoton!.callFunction("setPrecip", withArguments: funcArgs) { (resultCode : NSNumber?, error : Error?) -> Void in
+            if (error == nil) {
+                print("sent precip to particle")
+            }
+            else{
+                print("Error sending precip")
+            }
+        }
+        
     }
     
 
