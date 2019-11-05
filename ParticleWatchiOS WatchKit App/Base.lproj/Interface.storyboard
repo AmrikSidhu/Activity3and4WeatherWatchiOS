@@ -29,6 +29,12 @@
                         <label alignment="right" text="percep" id="UMh-cB-CdF">
                             <fontDescription key="font" type="system" pointSize="12"/>
                         </label>
+                        <button width="1" alignment="left" verticalAlignment="bottom" title="Send to Particle" id="IYH-OK-Nmo">
+                            <fontDescription key="font" type="italicSystem" pointSize="12"/>
+                            <connections>
+                                <action selector="btnSendToParticleClicked" destination="AgC-eL-Hgc" id="SFQ-ib-ucw"/>
+                            </connections>
+                        </button>
                     </items>
                     <color key="backgroundColor" red="0.078190376120000002" green="0.34512092729999999" blue="0.62449400909999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>

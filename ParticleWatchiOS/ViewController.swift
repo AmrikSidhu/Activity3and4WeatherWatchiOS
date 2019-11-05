@@ -8,8 +8,31 @@
 
 import UIKit
 import Particle_SDK
+import WatchConnectivity
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, WCSessionDelegate{
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        
+    }
+    
+    func sessionDidBecomeInactive(_ session: WCSession) {
+        
+    }
+    
+    func sessionDidDeactivate(_ session: WCSession) {
+        
+    }
+    
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+    }
+    
+    
+    var dateTime:Float!
+    var temp:Float!
+    var tempTom:Float!
+    var precip:Float!
+    var hour:String!
+    var minute:String!
 
     // MARK: User variables
     let USERNAME = "eramriksidhu@gmail.com"

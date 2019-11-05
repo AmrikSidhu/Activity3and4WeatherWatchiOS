@@ -10,9 +10,14 @@ import WatchKit
 import Foundation
 import Alamofire
 import SwiftyJSON
+import WatchConnectivity
 
 
-class InterfaceController: WKInterfaceController {
+class InterfaceController: WKInterfaceController, WCSessionDelegate {
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        
+    }
+    
     @IBOutlet weak var lblCityName: WKInterfaceLabel!
     
     @IBOutlet weak var lbltime: WKInterfaceLabel!
@@ -20,6 +25,13 @@ class InterfaceController: WKInterfaceController {
     @IBOutlet weak var lbltemprature: WKInterfaceLabel!
     
     @IBOutlet weak var lblperception: WKInterfaceLabel!
+    
+    @IBAction func btnSendToParticleClicked() {
+        
+        self.sendingWeatherInfoToiPhone()
+    }
+    
+    
     
     var latitude:String!
     var longitude:String!
@@ -53,7 +65,7 @@ class InterfaceController: WKInterfaceController {
         self.lblCityName.setText(city!)
         
         // getting longitude and latitude
-        //lat long
+
                self.latitude = userDefaults.string(forKey: "latitude")
                self.longitude = userDefaults.string(forKey: "longitude")
                
@@ -153,6 +165,19 @@ class InterfaceController: WKInterfaceController {
             print("Humidity: \(humidity!)")
             print("Country: \(country!)")
             print("Current Date: \(date)")
+        }
+    }
+    
+    public func sendingWeatherInfoToiPhone(){
+        if (WCSession.default.isReachable) {
+            print("phone reachable")
+            let message = ["time": self.dateAndTime,"temprature":self.tempratureToday,"tempratureTomorrow":self.tempratureTomorrow,"Precipitation":perceptionIs]
+            WCSession.default.sendMessage(message as [String : Any], replyHandler: nil)
+            // output a debug message to the console
+            print("sent weather data request to phone")
+        }
+        else {
+            print("WATCH: Cannot reach phone")
         }
     }
 
