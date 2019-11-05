@@ -61,24 +61,6 @@ class ViewController: UIViewController {
         } // end getDevice()
     }
     
-     func turnOnLights(){
-            let funcArgs = ["lights on"] as [Any]
-            let task = self.myPhoton!.callFunction("lightsOnOff", withArguments: funcArgs) { (resultCode : NSNumber?, error : Error?) -> Void in
-                if (error == nil) {
-                    print("LEDs successfully turned on")
-                }
-                else{
-                    print("Error turning on lights")
-                }
-            }
-            var bytesToReceive : Int64 = task.countOfBytesExpectedToReceive
-            print("\(bytesToReceive)")
-    
-        }
-    
-        @IBAction func btnLightsOn(_ sender: Any) {
-            self.turnOnLights()
-        }
 
 }
 
