@@ -13,9 +13,7 @@ class ViewController: UIViewController {
 
     // MARK: User variables
     let USERNAME = "eramriksidhu@gmail.com"
-    let PASSWORD = "gill@000"
-    
-    // MARK: Device
+    let PASSWORD = "gill@000"// MARK: Device
     let DEVICE_ID = "2b0040000f47363333343437"
     var myPhoton : ParticleDevice?
     
