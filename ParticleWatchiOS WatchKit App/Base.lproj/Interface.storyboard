@@ -10,7 +10,34 @@
         <!--Interface Controller-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="ParticleWatchiOS_WatchKit_App" customModuleProvider="target"/>
+                <controller fullBounds="YES" id="AgC-eL-Hgc" customClass="InterfaceController" customModule="ParticleWatchiOS_WatchKit_App" customModuleProvider="target">
+                    <items>
+                        <group width="1" alignment="left" id="rtB-0t-G0m">
+                            <items>
+                                <label alignment="left" text="Moga" id="d9U-M8-dmu">
+                                    <color key="textColor" red="0.93088163859999995" green="0.62129511459999998" blue="0.14351912559999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <fontDescription key="font" type="system" pointSize="14"/>
+                                </label>
+                                <label alignment="right" text="time" id="fUk-Px-2wj">
+                                    <fontDescription key="font" type="system" pointSize="10"/>
+                                </label>
+                            </items>
+                        </group>
+                        <label alignment="right" text="temp" id="4jF-Gi-yD5">
+                            <fontDescription key="font" type="system" pointSize="11"/>
+                        </label>
+                        <label alignment="right" text="percep" id="UMh-cB-CdF">
+                            <fontDescription key="font" type="system" pointSize="12"/>
+                        </label>
+                    </items>
+                    <color key="backgroundColor" red="0.078190376120000002" green="0.34512092729999999" blue="0.62449400909999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <connections>
+                        <outlet property="lblCityName" destination="d9U-M8-dmu" id="gRN-qx-Jy4"/>
+                        <outlet property="lblperception" destination="UMh-cB-CdF" id="QER-JQ-Jp6"/>
+                        <outlet property="lbltemprature" destination="4jF-Gi-yD5" id="22i-MK-7AS"/>
+                        <outlet property="lbltime" destination="fUk-Px-2wj" id="8LR-1k-wv9"/>
+                    </connections>
+                </controller>
             </objects>
             <point key="canvasLocation" x="134" y="163"/>
         </scene>
