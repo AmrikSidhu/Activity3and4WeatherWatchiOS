@@ -44,6 +44,15 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         super.awake(withContext: context)
         
         // Configure interface objects here.
+        if WCSession.isSupported() {
+            print("Watch supports WCSession")
+            WCSession.default.delegate = self
+            WCSession.default.activate()
+            print("Session Activated")
+        }
+        else {
+            print("Watch does not support WCSession")
+        }
     }
     
     override func willActivate() {
@@ -141,11 +150,6 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             
             let date = NSDate(timeIntervalSince1970: TimeInterval(currentTime!))
             let format = DateFormatter()
-            // Set the current timezone to .current
-            //format.timeZone = .current
-            // Set the format of the altered date.
-            //            format.dateFormat = "yyyy-MM-dd' 'HH:mm:ssZ"
-            // use MMMM for month String
             format.dateFormat = "h:mm a '' dd-MM-yyyy"
             // Set the current date, altered by timezone.
             let dateString = format.string(from: date as Date)
@@ -169,9 +173,11 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     }
     
     public func sendingWeatherInfoToiPhone(){
+        
         if (WCSession.default.isReachable) {
             print("phone reachable")
-            let message = ["time": self.dateAndTime,"temprature":self.tempratureToday,"tempratureTomorrow":self.tempratureTomorrow,"Precipitation":perceptionIs]
+            
+    let message = ["time":self.dateAndTime,"temprature":self.tempratureToday,"tempratureTomorrow":self.tempratureTomorrow,"precipitation":perceptionIs]
             WCSession.default.sendMessage(message as [String : Any], replyHandler: nil)
             // output a debug message to the console
             print("sent weather data request to phone")

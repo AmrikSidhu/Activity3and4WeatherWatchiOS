@@ -11,7 +11,11 @@ import Particle_SDK
 import WatchConnectivity
 
 class ViewController: UIViewController, WCSessionDelegate{
-    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+    
+    @IBOutlet weak var lblOpView: UILabel!
+    
+    
+        func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         
     }
     
@@ -24,15 +28,52 @@ class ViewController: UIViewController, WCSessionDelegate{
     }
     
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+        DispatchQueue.main.async {
+                    if (message.keys.contains("temprature")){
+                        print("Weather data recieved from Watch")
+                        
+                        self.dateandTime = message["time"] as? Float
+                        self.temprature = message["temprature"] as? Float
+                        self.tempTomorrow = message["tempratureTomorrow"] as? Float
+                        self.precipitation = message["precipitation"] as? Float
+                        
+                        
+                        let date = NSDate(timeIntervalSince1970: TimeInterval(self.dateandTime!))
+                        let hourFormat = DateFormatter()
+                        let minuteFormat = DateFormatter()
+                        // Set the current timezone to .current
+                        hourFormat.timeZone = .current
+                        minuteFormat.timeZone = .current
+                    
+        //                format.dateFormat = "h:mm a '' dd-MM-yyyy"
+                        hourFormat.dateFormat = "h"
+                        minuteFormat.dateFormat = "mm"
+                        
+                        // Set the current date, altered by timezone.
+                        let hourString = hourFormat.string(from: date as Date)
+                        self.hours = hourFormat.string(from: date as Date)
+                        self.minutes = minuteFormat.string(from: date as Date)
+                        print("HH: \(self.hours!)")
+                        print("MM:\(self.minutes!)")
+                        
+                        self.lblOpView.text = "MSG: \(self.dateandTime)"
+                        
+//                        self.sendHourToParticle()
+//                        self.sendMinuteToParticle()
+//                        self.sendTempToParticle()
+//                        self.sendTempTomToParticle()
+//                        self.sendPrecipToParticle()
+                    }
+                }
     }
     
     
-    var dateTime:Float!
-    var temp:Float!
-    var tempTom:Float!
-    var precip:Float!
-    var hour:String!
-    var minute:String!
+    var dateandTime:Float!
+    var temprature:Float!
+    var tempTomorrow:Float!
+    var precipitation:Float!
+    var hours:String!
+    var minutes:String!
 
     // MARK: User variables
     let USERNAME = "eramriksidhu@gmail.com"
